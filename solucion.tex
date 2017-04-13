@@ -1,0 +1,61 @@
+\documentclass[a4paper]{article} 
+
+\setlength{\parskip}{0.1em}
+\input{Algo1Macros}
+\usepackage{caratula} % Version modificada para usar las macros de algo1 de ~> https://github.com/bcardiff/dc-tex
+
+\begin{document}
+
+\titulo{TP de Especificaci\'on}
+\subtitulo{Sudoku}
+\fecha{1 de Abril de 2017}
+\materia{Algoritmos y Estructuras de Datos I}
+\grupo{Grupo 10}
+
+% Pongan cuantos integrantes quieran
+\integrante{Gomez, Francisco}{001/01}{francisco@gomezsalaverri.com}
+%\integrante{Apellido, Nombre2}{002/01}{email2@dominio.com}
+%\integrante{Apellido, Nombre3}{003/01}{email3@dominio.com}
+%\integrante{Apellido, Nombre4}{004/01}{email4@dominio.com}
+
+\maketitle
+
+\section{Problemas}
+\begin{proc}{sudoku\_esTableroValido}{\In t: \matriz{\ent}, \Out result: \bool}{}{}
+    \pre{\True}
+    \post{tableroValido(t) = result}
+    
+    
+\end{proc}
+
+
+
+\section{Predicados y Auxiliares generales}
+\pred{Nombre}{t: \matriz{\ent}}{\True}
+\pred{PredLargo}{t: \matriz{\ent}}{\\
+        (\forall i: \ent)(\forall j: \ent)\True\\
+        }
+    \aux{Aux}{i: \ent}{\bool}{\True}
+		
+	\pred{tableroValido}{t: \matriz{\ent}}{\\
+        esFilaValida(t)  $\land$  esColumnaValida(t)\\
+        }
+	\pred{esFilaValida}{t: \matriz{\ent}}{\\
+        (\forall i: \ent) (\forall j: \ent)  enRango(t,i)  $\yLuego$\\
+				enRango(t[i],j)  $\yLuego$  length(t[i]) = 9  $\implicaLuego$  0 \leq  t[i][j]  \leq 9\\
+				}
+				
+		\pred{esColumnaValida}{t: \matriz{\ent}}{\\
+        length(t) = 9  $\land$  (\forall i: \ent) (\forall j: \ent)  enRango(t,i) $\yLuego$\\
+				enRango(t[i],j)   $\implicaLuego$ 0  \leq  t[i][j] \leq 9\\
+				}		
+				
+		\pred{enRango}{t: \TLista{t}, i:\ent}{\\
+		0 \leq  i < length(t)\\
+		
+		}
+        }
+		
+\section{Decisiones tomadas}
+
+\end{document}
