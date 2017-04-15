@@ -24,36 +24,46 @@
 1. \begin{proc}{sudoku\_esTableroValido}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
     \pre{\True}
     \post{tableroValido(t) = \textbf{result}}
+		
 				\pred{tableroValido}{t: \matriz{\ent}}
 				{\\
         esFilaValida(t)  $\land$  esColumnaValida(t)\\
         }
+				
 				\pred{esFilaValida}{t: \matriz{\ent}}
 				{\\
         (\forall i: \ent) (\forall j: \ent)  enRango(t,i)  $\yLuego$\\
 				enRango(t[i],j)  $\yLuego$  length(t[i]) = 9  $\implicaLuego$  0 \leq  t[i][j]  \leq 9\\
 				}
+				
 				\pred{esColumnaValida}{t: \matriz{\ent}}
 				{\\
         (\forall i: \ent) (\forall j: \ent) length(t) = 9  $\land$ enRango(t,i) $\yLuego$\\
 				enRango(t[i],j)   $\implicaLuego$ 0  \leq  t[i][j] \leq 9\\
 				}
-\end{proc}
+	\end{proc}
 
 
 2. \begin{proc}{sudoku\_esCeldaVacia}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{ \Out result}: \bool }{}{}
       \pre{tableroValido(t) $\land$\\
       0 \leq f, c \leq }
-      \post{\textbf{result} = celdaVacia(f,c)}
-\end{proc}
+      \post{\textbf{result} = celdaVacia(f,c)
+				\pred{celdaVacia}{t: \matriz{\ent}, i: \ent, j: \ent }{s[i][j] = 0}
+			}
+	\end{proc}
 
 3. \begin{proc}{sudoku\_nroDeCeldasVacias}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent }{}{}
 		\pre{tableroValido(t)}
     \post
 		{
 			\textbf{result} = nroCeldasVacias(t)
+			\aux{nroCeldasVacias}{s: \matriz{\ent}}{\ent}
+			{\\
+				(\forall i: \ent)(\forall j: \ent) enRango(s,i) $\yLuego$ enRango(s[i],j) $\implicaLuego$ \\
+				\sum \IfThenElse{celdaVacia(s,i,j)}{1}{0}
+			}
 		}
-\end{proc}
+	\end{proc}
 
 4. \begin{proc}{sudoku\_primeraCeldaVaciaFila}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent  }{}{}
 		\pre{tableroValido(t)}
@@ -63,9 +73,21 @@
 			{-1}
 			{
 				(\exists i: \ent)(\exists j: \ent) \textbf{result} = i $\land$ enRango(t,i) $\yLuego$ enRango(t[i],j)        $\yLuego$ celdaVacia(t,i,j) $\land$ menorFilaVacia (t,i) $\land$ menorColumnaDeLaFilaVacia(t,i,j)
+				
+				\pred{menorFilaVacia}{\textbf{t:} \matriz{\ent}, \textbf{i:} \ent}
+				{\\
+					(\forall f: \ent)(\forall g: \ent) enRango(t,f) $\yLuego$ enRango(t[f],g)\\
+					$\implicaLuego$ celdaVacia(t,f,g) $\land$ f \geq i)
+				}
+		
+			\pred{menorColumnaDeLaFilaVacia}{\textbf{t:} \matriz{\ent}, \textbf{i:} \ent, \textbf{j:} \ent}
+			{\\
+				(\forall g: \ent) enRango(t[i],g)\\
+				$\implicaLuego$ celdaVacia(t,i,g) $\land$ g \geq j)
+			}
 			}
 		}
-\end{proc}
+	\end{proc}
 
 5. \begin{proc}{sudoku\_primeraCeldaVaciaColumna}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent }{}{}
 		\pre{tableroValido(t)}
@@ -77,12 +99,12 @@
 				(\exists i: \ent)(\exists j: \ent) \textbf{result} = j $\land$ enRango(t,i) $\yLuego$ enRango(t[i],j)        $\yLuego$ celdaVacia(t,i,j) $\land$ menorFilaVacia (t,i) $\land$ menorColumnaDeLaFilaVacia(t,i,j)
 			}
 		}
-\end{proc}
+	\end{proc}
 
 6. \begin{proc}{sudoku\_valorEnCelda}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result}: \bool}{}{}
 		\pre{tableroValido(t) $\land$ enRango(t,f) $\yLuego$ enRango(t[f],c) $\yLuego$ celdaVacia(t[f][c]) =false }
     \post{\textbf{result} = t[f][c]}
-\end{proc}
+	\end{proc}
 
 7. \begin{proc}{sudoku\_llenarCelda}{\textbf{inout t}: \matriz{\ent} \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\In value}: \ent}{}{}
     \pre{tableroValido(t) $\land$\\
@@ -91,12 +113,12 @@
     t = t_{0} $\land$\\
     t_{0}[f][c] = 0}
     \post{ t = SetAt(t_{0}, c, value)}
-\end{proc}
+	\end{proc}
 
 8. \begin{proc}{sudoku\_vaciarCelda}{\textbf{inout t:} \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result:} \bool}{}{}
 		\pre{tableroValido(t)}
     \post{}
-\end{proc}
+	\end{proc}
 
 9. \begin{proc}{sudoku\_esTableroParcialmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool }{}{}
 	\pre{\True}
@@ -107,7 +129,7 @@
 10. \begin{proc}{sudoku\_esTableroTotalmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
 		\pre{tableroValido(t)}
     \post{}
-\end{proc}
+	\end{proc}
 
 
 11. \begin{proc}{sudoku\_esSubTablero}{\textbf{\In t_{0},t_{1}}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
@@ -116,24 +138,35 @@
 		{
 		result = (\forall i: \ent) (\forall j: \ent) 
 		}
-\end{proc}
+	\end{proc}
 
 12. \begin{proc}{sudoku\_tieneSolucion}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
 		\pre{tableroValido(t)}
     \post{}
-\end{proc}
+	\end{proc}
 
 
 13. \begin{proc}{sudoku\_resolver}{\textbf{inout t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
 		\pre{\True}
-    \post{}
-\end{proc}
+    \post
+		{
+			\aux{Resolver}{t: \matriz{\ent}}{\matriz{\ent}}
+			{\\
+				\IfThenElse{esSub(t,x) $\yLuego$ tableroParcialmenteResuleto(x)}
+				{x}
+				{t}
+			}
+	
+		}
+	\end{proc}
 
 
 14. \begin{proc}{sudoku\_copiarTablero}{\textbf{\In src}: \matriz{\ent}, \textbf{\Out target}: \matriz{\ent}}{}{}
        \pre{\True}
-       \post{(\forall i: \ent)(enRango(src, i) $\implicaLuego$ src[i] = target[i]) $\land$\\
-             (\forall j: \ent)(enRango(src[i], j) $\implicaLuego$ src[i][j] = target[i][j])}
+       \post
+			{
+			src = target
+			}
     \end{proc}
 
 
@@ -146,36 +179,15 @@
         }
 \aux{Aux}{i: \ent}{\bool}{\True}
 	
-		\aux{nroCeldasVacias}{s: \matriz{\ent}}{\ent}
-			{\\
-				(\forall i: \ent)(\forall j: \ent) enRango(s,i) $\yLuego$ enRango(s[i],j) $\implicaLuego$ \\
-				\sum \IfThenElse{celdaVacia(s,i,j)}{1}{0}
-			}
-		\pred{celdaVacia}{t: \matriz{\ent}, i: \ent, j: \ent }{s[i][j] = 0}		
+		
+			
 		\pred{enRango}{t: \TLista{t}, i:\ent}
 		{\\
 			0 \leq  i < length(t)\\
 		}
 		
-		\aux{Resolver}{t: \matriz{\ent}}{\matriz{\ent}}
-		{\\
-			\IfThenElse{esSub(t,x) $\yLuego$ tableroParcialmenteResuleto(x)}
-			{x}
-			{t}
-		}
 	
-		\pred{menorFilaVacia}{\textbf{t:} \matriz{\ent}, \textbf{i:} \ent}
-		{\\
-      (\forall f: \ent)(\forall g: \ent) enRango(t,f) $\yLuego$ enRango(t[f],g)\\
-			$\implicaLuego$ celdaVacia(t,f,g) $\land$ f \geq i)
-    }
 		
-		\pred{menorColumnaDeLaFilaVacia}{\textbf{t:} \matriz{\ent}, \textbf{i:} \ent, \textbf{j:} \ent}
-		{\\
-      (\forall g: \ent) enRango(t[i],g)\\
-			$\implicaLuego$ celdaVacia(t,i,g) $\land$ g \geq j)
-			
-    }
         
 		
 \section{Decisiones tomadas}
