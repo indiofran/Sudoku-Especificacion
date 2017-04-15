@@ -21,7 +21,7 @@
 \maketitle
 
 \section{Problemas}
-\begin{proc}{sudoku\_esTableroValido}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
+1. \begin{proc}{sudoku\_esTableroValido}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
     \pre{\True}
     \post{tableroValido(t) = result}
 				\pred{tableroValido}{t: \matriz{\ent}}
@@ -41,71 +41,85 @@
 \end{proc}
 
 
-\begin{proc}{sudoku\_esCeldaVacia}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{ \Out result}: \bool }{}{}
+2. \begin{proc}{sudoku\_esCeldaVacia}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{ \Out result}: \bool }{}{}
 		\pre{tableroValido(t)}
     \post{}
 \end{proc}
 
-\begin{proc}{sudoku\_nroDeCeldasVacias}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent }{}{}
-		\pre{\True}
+3. \begin{proc}{sudoku\_nroDeCeldasVacias}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent }{}{}
+		\pre{tableroValido(t)}
     \post{}
 \end{proc}
 
-\begin{proc}{sudoku\_primeraCeldaVaciaFila}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent  }{}{}
-		\pre{\True}
+4. \begin{proc}{sudoku\_primeraCeldaVaciaFila}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent  }{}{}
+		\pre{tableroValido(t)}
+    \post
+		{
+			\IfThenElse{CeldasVacias(t) = 0 }
+			{-1}
+			{
+				(\exists i: \ent)(\exists j: \ent) result = i $\land$ enRango(t,i) $\yLuego$ enRango(t[i],j)        $\yLuego$ CeldaVacia(t,i,j) $\land$ menorFilaVacia (t,i) $\land$ menorColumnaDeLaFilaVacia(t,i,j)
+			}
+		}
+\end{proc}
+
+5. \begin{proc}{sudoku\_primeraCeldaVaciaColumna}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent }{}{}
+		\pre{tableroValido(t)}
+    \post
+		{
+			\IfThenElse{CeldasVacias(t) = 0 }
+			{-1}
+			{
+				(\exists i: \ent)(\exists j: \ent) result = j $\land$ enRango(t,i) $\yLuego$ enRango(t[i],j)        $\yLuego$ CeldaVacia(t,i,j) $\land$ menorFilaVacia (t,i) $\land$ menorColumnaDeLaFilaVacia(t,i,j)
+			}
+		}
+\end{proc}
+
+6. \begin{proc}{sudoku\_valorEnCelda}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result}: \bool}{}{}
+		\pre{tableroValido(t)}
     \post{}
 \end{proc}
 
-\begin{proc}{sudoku\_primeraCeldaVaciaColumna}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent }{}{}
-		\pre{\True}
+7. \begin{proc}{sudoku\_llenarCelda}{\textbf{inout t}: \matriz{\ent} \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result}: \bool}{}{}
+		\pre{tableroValido(t)}
     \post{}
 \end{proc}
 
-\begin{proc}{sudoku\_valorEnCelda}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result}: \bool}{}{}
-		\pre{\True}
+8. \begin{proc}{sudoku\_vaciarCelda}{\textbf{inout t:} \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result:} \bool}{}{}
+		\pre{tableroValido(t)}
     \post{}
 \end{proc}
 
-\begin{proc}{sudoku\_llenarCelda}{\textbf{inout t}: \matriz{\ent} \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result}: \bool}{}{}
-		\pre{\True}
-    \post{}
-\end{proc}
-
-\begin{proc}{sudoku\_vaciarCelda}{\textbf{inout t:} \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result:} \bool}{}{}
-		\pre{\True}
-    \post{}
-\end{proc}
-
-\begin{proc}{sudoku\_esTableroParcialmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool }{}{}
-		\pre{\True}
-    \post{}
-\end{proc}
-
-
-\begin{proc}{sudoku\_esTableroTotalmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
-		\pre{\True}
-    \post{}
-\end{proc}
-
-
-\begin{proc}{sudoku\_esSubTablero}{\textbf{\In t_{0},t_{1}}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
-		\pre{\True}
-    \post{}
-\end{proc}
-
-\begin{proc}{sudoku\_tieneSolucion}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
-		\pre{\True}
-    \post{}
-\end{proc}
-
-
-\begin{proc}{sudoku\_resolver}{\textbf{inout t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
+9. \begin{proc}{sudoku\_esTableroParcialmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool }{}{}
 		\pre{\True}
     \post{}
 \end{proc}
 
 
-\begin{proc}{sudoku\_copiarTablero}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out target}: \matriz{\ent}}{}{}
+10. \begin{proc}{sudoku\_esTableroTotalmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
+		\pre{tableroValido(t)}
+    \post{}
+\end{proc}
+
+
+11. \begin{proc}{sudoku\_esSubTablero}{\textbf{\In t_{0},t_{1}}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
+		\pre{tableroValido(t_{0}), tableroValido(t_{1})}
+    \post{}
+\end{proc}
+
+12. \begin{proc}{sudoku\_tieneSolucion}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
+		\pre{tableroValido(t)}
+    \post{}
+\end{proc}
+
+
+13. \begin{proc}{sudoku\_resolver}{\textbf{inout t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
+		\pre{\True}
+    \post{}
+\end{proc}
+
+
+14. \begin{proc}{sudoku\_copiarTablero}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out target}: \matriz{\ent}}{}{}
 		\pre{\True}
     \post{}
 \end{proc}
@@ -122,19 +136,30 @@
 	
 				
 		
-\pred{enRango}{t: \TLista{t}, i:\ent}
-{\\
-	0 \leq  i < length(t)\\
-}
+		\pred{enRango}{t: \TLista{t}, i:\ent}
+		{\\
+			0 \leq  i < length(t)\\
+		}
 		
-\aux{Resolver}{t: \matriz{\ent}}{\matriz{\ent}}
-{
-	\IfThenElse{esSub(t,x) $\yLuego$ tableroParcialmenteResuleto(x)}
-	{x}
-	{t}
-}
+		\aux{Resolver}{t: \matriz{\ent}}{\matriz{\ent}}
+		{
+			\IfThenElse{esSub(t,x) $\yLuego$ tableroParcialmenteResuleto(x)}
+			{x}
+			{t}
+		}
+	
+		\pred{menorFilaVacia}{\textbf{t:} \matriz{\ent}, \textbf{i:} \ent}
+		{\\
+      (\forall f: \ent)(\forall g: \ent) enRango(t,f) $\yLuego$ enRango(t[f],g)\\
+			$\implicaLuego$ celdaVacia(t,f,g) $\land$ f \geq i)
+    }
 		
-		
+		\pred{menorColumnaDeLaFilaVacia}{\textbf{t:} \matriz{\ent}, \textbf{i:} \ent, \textbf{j:} \ent}
+		{\\
+      (\forall g: \ent) enRango(t[i],g)\\
+			$\implicaLuego$ celdaVacia(t,i,g) $\land$ g \geq j)
+			
+    }
         
 		
 \section{Decisiones tomadas}
