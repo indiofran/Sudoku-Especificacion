@@ -42,11 +42,9 @@
 
 
 2. \begin{proc}{sudoku\_esCeldaVacia}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{ \Out result}: \bool }{}{}
-		\pre{tableroValido(t) $\land$ enRango(t,f) $\yLuego$ enRango(t[f],c)}
-    \post
-		{
-		\textbf{result} = celdaVacia(t,f,c)
-		}
+      \pre{tableroValido(t) $\land$\\
+      0 \leq f, c \leq }
+      \post{\textbf{result} = celdaVacia(f,c)}
 \end{proc}
 
 3. \begin{proc}{sudoku\_nroDeCeldasVacias}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent }{}{}
@@ -86,9 +84,13 @@
     \post{\textbf{result} = t[f][c]}
 \end{proc}
 
-7. \begin{proc}{sudoku\_llenarCelda}{\textbf{inout t}: \matriz{\ent} \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result}: \bool}{}{}
-		\pre{tableroValido(t)}
-    \post{}
+7. \begin{proc}{sudoku\_llenarCelda}{\textbf{inout t}: \matriz{\ent} \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\In value}: \ent}{}{}
+    \pre{tableroValido(t) $\land$\\
+    0 \leq f, c \leq 8 $\land$\\
+    1 \leq value \leq 9 $\land$\\
+    t = t_{0} $\land$\\
+    t_{0}[f][c] = 0}
+    \post{ t = SetAt(t_{0}, c, value)}
 \end{proc}
 
 8. \begin{proc}{sudoku\_vaciarCelda}{\textbf{inout t:} \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result:} \bool}{}{}
@@ -97,9 +99,9 @@
 \end{proc}
 
 9. \begin{proc}{sudoku\_esTableroParcialmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool }{}{}
-		\pre{\True}
-    \post{}
-\end{proc}
+	\pre{\True}
+        \post{\textbf{result} = TableroParcialmenteResuelto(t)}
+   \end{proc}
 
 
 10. \begin{proc}{sudoku\_esTableroTotalmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
@@ -128,10 +130,11 @@
 \end{proc}
 
 
-14. \begin{proc}{sudoku\_copiarTablero}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out target}: \matriz{\ent}}{}{}
-		\pre{\True}
-    \post{}
-\end{proc}
+14. \begin{proc}{sudoku\_copiarTablero}{\textbf{\In src}: \matriz{\ent}, \textbf{\Out target}: \matriz{\ent}}{}{}
+       \pre{\True}
+       \post{(\forall i: \ent)(enRango(src, i) $\implicaLuego$ src[i] = target[i]) $\land$\\
+             (\forall j: \ent)(enRango(src[i], j) $\implicaLuego$ src[i][j] = target[i][j])}
+    \end{proc}
 
 
 
