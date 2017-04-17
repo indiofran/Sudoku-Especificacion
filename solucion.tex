@@ -152,7 +152,8 @@
 		{
 			\aux{Resolver}{t: \matriz{\ent}}{\matriz{\ent}}
 			{\\
-				\IfThenElse{esSub(t,x) $\yLuego$ tableroParcialmenteResuleto(x)}
+				(\exists x: \matriz{\ent})
+				\IfThenElse{esSub(t,x) $\yLuego$ tableroTotalmenteResuleto(x)}
 				{x}
 				{t}
 			}
