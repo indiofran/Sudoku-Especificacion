@@ -46,9 +46,11 @@
 
 2. \begin{proc}{sudoku\_esCeldaVacia}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{ \Out result}: \bool }{}{}
       \pre{tableroValido(t) $\land$\\
-      0 \leq f, c \leq }
+						esFilaYColumnaValida(f,c) \\ 
+			}
       \post{\textbf{result} = celdaVacia(f,c)
 				\pred{celdaVacia}{t: \matriz{\ent}, i: \ent, j: \ent }{s[i][j] = 0}
+				\pred{esFilaYColumnaValida}{i: \ent, j: \ent }{0 \leq i, j \leq 8}
 			}
 	\end{proc}
 
@@ -102,27 +104,43 @@
 	\end{proc}
 
 6. \begin{proc}{sudoku\_valorEnCelda}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result}: \bool}{}{}
-		\pre{tableroValido(t) $\land$ enRango(t,f) $\yLuego$ enRango(t[f],c) $\yLuego$ celdaVacia(t[f][c]) =false }
+		\pre{tableroValido(t) $\land$ \\
+					esFilaYColumnaValida(f,c) $\land$ \\
+					celdaVacia(t[f][c]) = false \\
+		}
     \post{\textbf{result} = t[f][c]}
 	\end{proc}
 
 7. \begin{proc}{sudoku\_llenarCelda}{\textbf{inout t}: \matriz{\ent} \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\In value}: \ent}{}{}
-    \pre{tableroValido(t) $\land$\\
-    0 \leq f, c \leq 8 $\land$\\
-    1 \leq value \leq 9 $\land$\\
-    t = t_{0} $\land$\\
-    t_{0}[f][c] = 0}
-    \post{ t = SetAt(t_{0}, c, value)}
+    \pre
+		{
+			tableroValido(t) $\land$\\
+			esFilaYColumnaValida(f,c) $\land$\\
+			1 \leq value \leq 9 $\land$\\
+			t = t_{0} $\land$\\
+			t_{0}[f][c] = 0
+		}
+    \post{ t = SetAt(t_{0}[f], c, value)}
 	\end{proc}
 
 8. \begin{proc}{sudoku\_vaciarCelda}{\textbf{inout t:} \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result:} \bool}{}{}
-		\pre{tableroValido(t)}
-    \post{}
+		\pre
+		{
+			tableroValido(t)  $\land$ \\
+			esFilaYColumnaValida(f,c)  $\land$ \\
+			t[f][c] \neq 0  $\land$\\
+			t = t_{0}
+		}
+    \post
+		{
+			t = SetAt(t_{0}[f], c, 0)
+		}
 	\end{proc}
 
 9. \begin{proc}{sudoku\_esTableroParcialmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool }{}{}
 	\pre{\True}
         \post{\textbf{result} = TableroParcialmenteResuelto(t)}
+				
    \end{proc}
 
 
@@ -136,7 +154,12 @@
 		\pre{tableroValido(t_{0}), tableroValido(t_{1})}
     \post
 		{
-		result = (\forall i: \ent) (\forall j: \ent) 
+		result = esSub(t_{0},t_{1})\\
+				\pred{esSub}{t_{0}: \matriz{\ent},t_{1}: \matriz{\ent}}{\\
+					(\forall i: \ent)(\forall j: \ent) length(t_{0}) = length(t_{1}) $\yLuego$\\
+					enRengo(t_{0},i) $\yLuego$ length(t_{0}[i]) = length(t_{1}[i]) $\land$ \\
+					enRengo(t_{0}[i],j) $\implicaLuego$ t_{0}[i][f] = t_{1}[i][f]
+        }
 		}
 	\end{proc}
 
