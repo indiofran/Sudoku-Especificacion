@@ -48,7 +48,7 @@
       \pre{tableroValido(t) $\land$ esFilaYColumnaValida(f,c)}
       \post{\textbf{result} = celdaVacia(f,c)}
       \pred{celdaVacia}{t: \matriz{\ent}, i: \ent, j: \ent }{s[i][j] = 0}  
-      \pred{esFilaYColumnaValida}{i: \ent, j: \ent }{0 \leq i, j \leq 8}
+      
    \end{proc}
 
 3. \begin{proc}{sudoku\_nroDeCeldasVacias}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent }{}{}
@@ -229,7 +229,8 @@
 \aux{Aux}{i: \ent}{\bool}{\True}
 	
 		
-			
+\pred{esFilaYColumnaValida}{i: \ent, j: \ent }{0 \leq i, j \leq 8}
+
 		\pred{enRango}{t: \TLista{t}, i:\ent}
 		{\\
 			0 \leq  i < length(t)\\
