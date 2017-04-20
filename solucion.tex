@@ -44,15 +44,12 @@
 	\end{proc}
 
 
-2. \begin{proc}{sudoku\_esCeldaVacia}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{ \Out result}: \bool }{}{}
-      \pre{tableroValido(t) $\land$\\
-						esFilaYColumnaValida(f,c) \\ 
-			}
+2. \begin{proc}{sudoku\_esCeldaVacia}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent,     \textbf{ \Out result}: \bool }{}{}
+      \pre{tableroValido(t) $\land$ esFilaYColumnaValida(f,c)}
       \post{\textbf{result} = celdaVacia(f,c)
-				\pred{celdaVacia}{t: \matriz{\ent}, i: \ent, j: \ent }{s[i][j] = 0}
-				\pred{esFilaYColumnaValida}{i: \ent, j: \ent }{0 \leq i, j \leq 8}
-			}
-	\end{proc}
+      \pred{celdaVacia}{t: \matriz{\ent}, i: \ent, j: \ent }{s[i][j] = 0}  
+      \pred{esFilaYColumnaValida}{i: \ent, j: \ent }{0 \leq i, j \leq 8}
+   \end{proc}
 
 3. \begin{proc}{sudoku\_nroDeCeldasVacias}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent }{}{}
 		\pre{tableroValido(t)}
@@ -141,19 +138,28 @@
 	\pre{\True}
         \post{\textbf{result} = TableroParcialmenteResuelto(t)}
 	\pred{noHayRepetidos}{s: \TLista{\ent}}{\\
-        (\forall i: \ent)(\forall j: \ent)(enRango(s, i) $\land$ 
-        enRango(s, j) $\land$
-        j \neq i) $\implicaLuego$
-        (s[i] \neq s[j])\\
+        (\forall i: \ent)(\forall j: \ent)(enRango(s, i) $\land$ enRango(s, j) $\land$
+        j \neq i $\land$ s[i] \neq 0 $\land$ s[j] \neq 0) $\implicaLuego$ (s[i] \neq s[j])\\
         }
 	\pred{FiladeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
         (\forall i: \ent)(enRango(t, i) $\implicaLuego$ noHayRepetidos(t[i])\\
         }	
 	\pred{ColumnadeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
-        (\forall i: \ent)(\forall j: \ent)((enRango(t, i)  $\land$ enRango(t[i], k))$\implicaLuego$ (s = Concat(subseq(s[i], j, j+1)) $\land$  noHayRepetidos(s))\\
+        (\forall i: \ent)(\forall j: \ent)((enRango(t, i)  $\land$ enRango(t[i], k))$\implicaLuego$ 
+	(s = Concat(subseq(s[i], j, j+1)) $\land$  noHayRepetidos(s))\\
         }	
-	
-	
+	\pred{regióndeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
+        (\forall i: \ent)(\forall j: \ent)((enRango(t, i) $\land$ i mod 3 = 0) $\yLuego$
+        (enRango(s, j) $\land$ j mod 3 = 0)\\
+	$\implicaLuego$ (s = Concat(subseq(s[i], j, j+3), subseq(s[i+1], j, j+3), subseq(s[i+2], j, j+3))$\land$\\
+	noHayRepetidos(s))\\
+        }
+	\pred{TableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
+        TableroValido(t) $\land$\\
+	filadeTableroParcialmenteResuelto(t) $\land$\\
+	columnadeTableroParcialmenteResuelto(t) $\land$\\
+	regiondeTableroParcialmenteResuelto(t)\\
+        }
    \end{proc}
 
 
