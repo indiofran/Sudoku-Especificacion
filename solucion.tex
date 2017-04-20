@@ -140,7 +140,20 @@
 9. \begin{proc}{sudoku\_esTableroParcialmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool }{}{}
 	\pre{\True}
         \post{\textbf{result} = TableroParcialmenteResuelto(t)}
-				
+	\pred{noHayRepetidos}{s: \TLista{\ent}}{\\
+        (\forall i: \ent)(\forall j: \ent)(enRango(s, i) $\land$ 
+        enRango(s, j) $\land$
+        j \neq i) $\implicaLuego$
+        (s[i] \neq s[j])\\
+        }
+	\pred{FiladeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
+        (\forall i: \ent)(enRango(t, i) $\implicaLuego$ noHayRepetidos(t[i])\\
+        }	
+	\pred{ColumnadeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
+        (\forall i: \ent)(\forall j: \ent)((enRango(t, i)  $\land$ enRango(t[i], k))$\implicaLuego$ (s = Concat(subseq(s[i], j, j+1)) $\land$  noHayRepetidos(s))\\
+        }	
+	
+	
    \end{proc}
 
 
