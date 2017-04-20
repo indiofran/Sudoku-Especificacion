@@ -138,19 +138,25 @@
 	\pre{\True}
         \post{\textbf{result} = TableroParcialmenteResuelto(t)}
 	\pred{noHayRepetidos}{s: \TLista{\ent}}{\\
-        (\forall i: \ent)(\forall j: \ent)(enRango(s, i) $\land$ enRango(s, j) $\land$
-        j \neq i $\land$ s[i] \neq 0 $\land$ s[j] \neq 0) $\implicaLuego$ (s[i] \neq s[j])\\
+        (\forall i: \ent)(\forall j: \ent)((enRango(s, i) $\land$ enRango(s, j) $\land$
+        j \neq i)) $\implicaLuego$ ((s[i] = 0 $\land$ s[j]=0) $\oLuego$ s[i] \neq s[j])\\
+        }
+	\pred{TableroConElementosDelCeroalNueve}{t: \matriz{\ent}}{\\
+        (\forall i: \ent)(\forall j: \ent)((enRango(t, i) $\land$ enRango(t[i], j))$\yLuego$
+        (0 \leq t[i][j] \leq 9) \\
         }
 	\pred{FiladeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
+	TableroConElementosDelCeroalNueve(t) $\land$\\
         (\forall i: \ent)(enRango(t, i) $\implicaLuego$ noHayRepetidos(t[i])\\
         }	
 	\pred{ColumnadeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
-        (\forall i: \ent)(\forall j: \ent)((enRango(t, i)  $\land$ enRango(t[i], j))$\implicaLuego$ 
-	(s = Concat(subseq(s[i], j, j+1)) $\land$  noHayRepetidos(s))\\
+	TableroConElementosDelCeroalNueve(t)$\land$\\
+        (\forall i: \ent)(\forall j: \ent)(\forall h: \ent)((enRango(t, i)  $\land$ enRango(t, j) $\land$ enRango(t[i], h)$\land$ 
+	i \neq j)  $\implicaLuego$ (t[i][h] \neq t[j][h])\\
         }	
-	\pred{regióndeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
+	\pred{regiondeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
         (\forall i: \ent)(\forall j: \ent)((enRango(t, i) $\land$ i mod 3 = 0) $\yLuego$
-        (enRango(s, j) $\land$ j mod 3 = 0)\\
+        (enRango(t[i], j) $\land$ j mod 3 = 0)\\
 	$\implicaLuego$ (s = Concat(subseq(s[i], j, j+3), subseq(s[i+1], j, j+3), subseq(s[i+2], j, j+3))$\land$\\
 	noHayRepetidos(s))\\
         }
