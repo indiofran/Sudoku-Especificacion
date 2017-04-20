@@ -145,7 +145,7 @@
         (\forall i: \ent)(enRango(t, i) $\implicaLuego$ noHayRepetidos(t[i])\\
         }	
 	\pred{ColumnadeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
-        (\forall i: \ent)(\forall j: \ent)((enRango(t, i)  $\land$ enRango(t[i], k))$\implicaLuego$ 
+        (\forall i: \ent)(\forall j: \ent)((enRango(t, i)  $\land$ enRango(t[i], j))$\implicaLuego$ 
 	(s = Concat(subseq(s[i], j, j+1)) $\land$  noHayRepetidos(s))\\
         }	
 	\pred{regióndeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
