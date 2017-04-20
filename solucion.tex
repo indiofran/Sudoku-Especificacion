@@ -46,7 +46,7 @@
 
 2. \begin{proc}{sudoku\_esCeldaVacia}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent,     \textbf{ \Out result}: \bool }{}{}
       \pre{tableroValido(t) $\land$ esFilaYColumnaValida(f,c)}
-      \post{\textbf{result} = celdaVacia(f,c)
+      \post{\textbf{result} = celdaVacia(f,c)}
       \pred{celdaVacia}{t: \matriz{\ent}, i: \ent, j: \ent }{s[i][j] = 0}  
       \pred{esFilaYColumnaValida}{i: \ent, j: \ent }{0 \leq i, j \leq 8}
    \end{proc}
