@@ -16,7 +16,7 @@
 \integrante{Gomez Salaverri, Francisco}{550/15}{francisco@gomezsalaverri.com}
 \integrante{Matias Colque, Nadia Noemí}{188/17}{nmatias@dc.uba.ar}
 \integrante{Girón, Jorge David}{637/16}{jorgedavid2905@gmail.com}
-%\integrante{Apellido, Nombre4}{004/01}{email4@dominio.com}
+%\integrante{Boncini, Ferando}{004/01}{email4@dominio.com}
 
 \maketitle
 
@@ -56,12 +56,13 @@
     \post
 		{
 			\textbf{result} = nroCeldasVacias(t)
+		}
 			\aux{nroCeldasVacias}{s: \matriz{\ent}}{\ent}
 			{\\
 				(\forall i: \ent)(\forall j: \ent) enRango(s,i) $\yLuego$ enRango(s[i],j) $\implicaLuego$ \\
 				\sum \IfThenElse{celdaVacia(s,i,j)}{1}{0}
 			}
-		}
+		
 	\end{proc}
 
 4. \begin{proc}{sudoku\_primeraCeldaVaciaFila}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result} : \ent  }{}{}
@@ -125,12 +126,12 @@
 		{
 			tableroValido(t)  $\land$ \\
 			esFilaYColumnaValida(f,c)  $\land$ \\
-			t[f][c] \neq 0  $\land$\\
 			t = t_{0}
 		}
     \post
-		{
-			t = SetAt(t_{0}[f], c, 0)
+		{ \textbf{result} = (t[f][c] \neq 0 ) $\land$ \\
+			\textbf{t} = SetAt(t_{0}[f], c, 0) \\
+			 
 		}
 	\end{proc}
 
@@ -170,10 +171,11 @@
 
 
 10. \begin{proc}{sudoku\_esTableroTotalmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
-		\pre{tableroParcialmenteResuelto(t)}
+		\pre{tableroValido(t)}
     		\post{\textbf{result} = tableroTotalmenteResuelto(t)}
 		\pred{tableroTotalmenteResuelto}{t: \matriz{\ent}}{\\
-	nroCeldasVacias(t) = 0\\
+	nroCeldasVacias(t) = 0 $\land$\\
+	tableroParcialmenteResuelto(t)
 	}
 	\end{proc}
 
@@ -182,32 +184,36 @@
 		\pre{tableroValido(t_{0}), tableroValido(t_{1})}
     \post
 		{
-		result = esSub(t_{0},t_{1})\\
+		result = esSub(t_{0},t_{1})
+		}
 				\pred{esSub}{t_{0}: \matriz{\ent},t_{1}: \matriz{\ent}}{\\
 					(\forall i: \ent)(\forall j: \ent) length(t_{0}) = length(t_{1}) $\yLuego$\\
 					enRengo(t_{0},i) $\yLuego$ length(t_{0}[i]) = length(t_{1}[i]) $\land$ \\
-					enRengo(t_{0}[i],j) $\implicaLuego$ t_{0}[i][f] = t_{1}[i][f]
-        }
+					enRengo(t_{0}[i],j) $\implicaLuego$ t_{0}[i][f] \neq 0 $\land$ t_{0}[i][f] = t_{1}[i][f]
+        
 		}
 	\end{proc}
 
 12. \begin{proc}{sudoku\_tieneSolucion}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
 		\pre{tableroValido(t)}
-    \post{}
-	\end{proc}
-
-
-13. \begin{proc}{sudoku\_resolver}{\textbf{inout t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
-		\pre{\True}
-    \post
-		{
-			\aux{Resolver}{t: \matriz{\ent}}{\matriz{\ent}}
+    \post{
+		\textbf{tienesolucion} = (solucion(t) \neq t)
+		}
+		\aux{solucion}{t: \matriz{\ent}}{\matriz{\ent}}
 			{\\
 				(\exists x: \matriz{\ent})
 				\IfThenElse{esSub(t,x) $\yLuego$ tableroTotalmenteResuleto(x)}
 				{x}
 				{t}
-			}
+	\end{proc}
+
+
+13. \begin{proc}{sudoku\_resolver}{\textbf{inout t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
+		\pre{t_{0}=t}
+    \post
+		{
+		\textbf{tienesolucion} = (esTableroValido(t) $\land$ (solucion(t_{0} ) \neq t_{0})) $\land$ t = solucion(t_{0})
+		}
 	
 		}
 	\end{proc}
