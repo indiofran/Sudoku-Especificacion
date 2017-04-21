@@ -170,8 +170,11 @@
 
 
 10. \begin{proc}{sudoku\_esTableroTotalmenteResuelto}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
-		\pre{tableroValido(t)}
-    \post{}
+		\pre{tableroParcialmenteResuelto(t)}
+    		\post{\textbf{result} = tableroTotalmenteResuelto(t)}
+		\pred{tableroTotalmenteResuelto}{t: \matriz{\ent}}{\\
+	nroCeldasVacias(t) = 0\\
+	}
 	\end{proc}
 
 
@@ -227,7 +230,6 @@
         (\forall i: \ent)(\forall j: \ent)\True\\
         }
 \aux{Aux}{i: \ent}{\bool}{\True}
-	
 		
 \pred{esFilaYColumnaValida}{i: \ent, j: \ent }{0 \leq i, j \leq 8}
 
