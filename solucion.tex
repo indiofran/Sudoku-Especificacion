@@ -188,8 +188,8 @@
 		}
 				\pred{esSub}{t_{0}: \matriz{\ent},t_{1}: \matriz{\ent}}{\\
 					(\forall i: \ent)(\forall j: \ent) length(t_{0}) = length(t_{1}) $\yLuego$\\
-					enRengo(t_{0},i) $\yLuego$ length(t_{0}[i]) = length(t_{1}[i]) $\land$ \\
-					enRengo(t_{0}[i],j) $\implicaLuego$ t_{0}[i][f] \neq 0 $\land$ t_{0}[i][f] = t_{1}[i][f]
+					enRango(t_{0},i) $\yLuego$ length(t_{0}[i]) = length(t_{1}[i]) $\land$ \\
+					enRango(t_{0}[i],j) $\implicaLuego$ t_{0}[i][f] \neq 0 $\land$ t_{0}[i][f] = t_{1}[i][f]
         
 		}
 	\end{proc}
@@ -231,10 +231,7 @@
 
 \section{Predicados y Auxiliares generales}
 
-\pred{Nombre}{t: \matriz{\ent}}{\True}
-\pred{PredLargo}{t: \matriz{\ent}}{\\
-        (\forall i: \ent)(\forall j: \ent)\True\\
-        }
+
 \aux{Aux}{i: \ent}{\bool}{\True}
 		
 \pred{esFilaYColumnaValida}{i: \ent, j: \ent }{0 \leq i, j \leq 8}
