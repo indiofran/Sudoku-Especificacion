@@ -95,7 +95,7 @@
 		}
 	\end{proc}
 
-6. \begin{proc}{sudoku\_valorEnCelda}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result}: \bool}{}{}
+6. \begin{proc}{sudoku\_valorEnCelda}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent, \textbf{\Out result}: \ent}{}{}
 		\pre{tableroValido(t) $\land$ \\
 					esFilaYColumnaValida(f,c) $\land$ \\
 					celdaVacia(t[f][c]) = false \\
@@ -147,7 +147,7 @@
 	\pred{ColumnadeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
 	TableroConElementosDelCeroalNueve(t)$\land$\\
         (\forall i: \ent)(\forall j: \ent)(\forall h: \ent)((enRango(t, i)  $\land$ enRango(t, j) $\land$ enRango(t[i], h)$\land$ 
-	i \neq j)  $\implicaLuego$ (t[i][h] \neq t[j][h])\\
+	i \neq j)  $\implicaLuego$ ((t[i][h]=0 $\lnad$ t[j][h]=0) $\oLuego$ (t[i][h] \neq t[j][h]))\\
         }	
 	\pred{regiondeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
         (\forall i: \ent)(\forall j: \ent)((enRango(t, i) $\land$ i mod 3 = 0) $\yLuego$
@@ -193,9 +193,9 @@
     \post{
 		\textbf{tienesolucion} = (solucion(t) \neq t)
 		}
-		\aux{solucion}{t: \matriz{\ent}}{\matriz{\ent}}
+		\hspace*{20mm}\aux{solucion}{t: \matriz{\ent}}{\matriz{\ent}}
 			{\\
-				(\exists x: \matriz{\ent})
+				\hspace*{20mm}(\exists x: \matriz{\ent})
 				\IfThenElse{esSub(t,x) $\yLuego$ tableroTotalmenteResuleto(x)}
 				{x}
 				{t}
