@@ -21,27 +21,21 @@
 \maketitle
 
 \section{Problemas}
-1. \begin{proc}{sudoku\_esTableroValido}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
+1.  \begin{proc}{sudoku\_esTableroValido}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out result}: \bool}{}{}
     \pre{\True}
     \post{tableroValido(t) = \textbf{result}}
-		
-				\pred{tableroValido}{t: \matriz{\ent}}
-				{\\
-        esFilaValida(t)  $\land$  esColumnaValida(t)\\
+    \pred{esMatrizNuevePorNueve}{t: \matriz{\ent}}{\\
+        length(t)=9 $\land$\\
+        (\forall j: \ent)(enRango(t,j) \implicaLuego (length(t[j])=9))\\
         }
-				
-				\pred{esFilaValida}{t: \matriz{\ent}}
-				{\\
-        (\forall i: \ent) (\forall j: \ent)  enRango(t,i)  $\yLuego$\\
-				enRango(t[i],j)  $\yLuego$  length(t[i]) = 9  $\implicaLuego$  0 \leq  t[i][j]  \leq 9\\
-				}
-				
-				\pred{esColumnaValida}{t: \matriz{\ent}}
-				{\\
-        (\forall i: \ent) (\forall j: \ent) length(t) = 9  $\land$ enRango(t,i) $\yLuego$\\
-				enRango(t[i],j)   $\implicaLuego$ 0  \leq  t[i][j] \leq 9\\
-				}
-	\end{proc}
+    \pred{elementosDelCeroAlNueve}{t: \matriz{\ent}}{\\
+        (\forall i: \ent)(\forall j: \ent)((enRango(t, i) $\yLuego$ enRango(t[i], j)) $\implicaLuego$ (0 \leq t[i][j] \leq 9))\\
+        }
+    \pred{tableroValido}{t: \matriz{\ent}}{\\
+        esMatrizNuevePorNueve(t) $\land$\\
+        elementosDelCeroAlNueve(t)\\
+        }
+    \end{proc}
 
 
 2. \begin{proc}{sudoku\_esCeldaVacia}{\textbf{\In t}: \matriz{\ent}, \textbf{\In f}: \ent, \textbf{\In c}: \ent,     \textbf{ \Out result}: \bool }{}{}
