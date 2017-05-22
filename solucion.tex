@@ -210,9 +210,9 @@
 		\pre{t_{0}=t}
     \post
 		{
-		\textbf{tienesolucion} = (esTableroValido(t) $\land$ ((\exists x: \matriz{\ent})esSolucion(t_{0},x ) \neq t_{0})) $\land$ t = esSolucion(t_{0},x )
-		}
-	
+		\IfThenElse {(esTableroValido(t) $\land$ (\exists x: \matriz{\ent})(t_{0} \neq solucion(t_{0},x) $\land$ esSolucion(t_{0},x))}
+		{tieneSolucion = True $\land$ t = solucion(t_{0}, x)}
+		{tieneSolucion = False $\land$ t = t_{0}}
 		}
 	\end{proc}
 
