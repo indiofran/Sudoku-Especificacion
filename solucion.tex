@@ -152,8 +152,8 @@
 	\pred{regiondeTableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
         (\forall i: \ent)(\forall j: \ent)((enRango(t, i) $\land$ i mod 3 = 0) $\yLuego$
         (enRango(t[i], j) $\land$ j mod 3 = 0)\\
-	$\implicaLuego$ (\exists s \TLista{\ent})(s = Concat(Concat(subseq(s[i], j, j+3), subseq(s[i+1], j, j+3)), subseq(s[i+2], j, j+3))$\land$\\
-	noHayRepetidos(s))\\
+	$\implicaLuego$ (\exists t \TLista{\ent})(s = Concat(Concat(subseq(t[i], j, j+3), subseq(t[i+1], j, j+3)), subseq(t[i+2], j, j+3))$\land$\\
+	noHayRepetidos(t))\\
         }
 	\pred{TableroParcialmenteResuelto}{t: \matriz{\ent}}{\\
         TableroValido(t) $\land$\\
