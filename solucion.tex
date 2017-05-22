@@ -191,22 +191,26 @@
 12. \begin{proc}{sudoku\_tieneSolucion}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
 		\pre{tableroValido(t)}
     \post{
-		\textbf{tienesolucion} = (solucion(t) \neq t)
+		\textbf{tienesolucion} = ((\exists x: \matriz{\ent}) solucion(t,x) \neq t)\\
 		}
-		\hspace*{20mm}\aux{solucion}{t: \matriz{\ent}}{\matriz{\ent}}
+		\pred{esSolucion}{t: \matriz{\ent},x: \matriz{\ent}}
+		{\\
+			esSub(t,x) $\yLuego$ tableroTotalmenteResuelto(x)
+		}
+		\hspace*{20mm}\aux{solucion}{t: \matriz{\ent},x: \matriz{\ent}}{\matriz{\ent}}
 			{\\
-				\hspace*{20mm}(\exists x: \matriz{\ent})
-				\IfThenElse{esSub(t,x) $\yLuego$ tableroTotalmenteResuleto(x)}
+				\hspace*{20mm}\IfThenElse{esSolucion(t,x)}
 				{x}
 				{t}
-	\end{proc}
+	\end{proc}\\
+	
 
 
 13. \begin{proc}{sudoku\_resolver}{\textbf{inout t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
 		\pre{t_{0}=t}
     \post
 		{
-		\textbf{tienesolucion} = (esTableroValido(t) $\land$ (solucion(t_{0} ) \neq t_{0})) $\land$ t = solucion(t_{0})
+		\textbf{tienesolucion} = (esTableroValido(t) $\land$ ((\exists x: \matriz{\ent})esSolucion(t_{0},x ) \neq t_{0})) $\land$ t = esSolucion(t_{0},x )
 		}
 	
 		}
