@@ -191,7 +191,7 @@
 12. \begin{proc}{sudoku\_tieneSolucion}{\textbf{\In t}: \matriz{\ent}, \textbf{\Out tienesolucion}: \bool}{}{}
 		\pre{tableroValido(t)}
     \post{
-		\textbf{tienesolucion} = ((\exists x: \matriz{\ent}) solucion(t,x) \neq t)\\
+		\textbf{tienesolucion} = ((\exists x: \matriz{\ent}) esSolucion(t,x))\\
 		}
 		\pred{esSolucion}{t: \matriz{\ent},x: \matriz{\ent}}
 		{\\
