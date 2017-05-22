@@ -54,7 +54,7 @@
 			\aux{nroCeldasVacias}{s: \matriz{\ent}}{\ent}
 			{\\
 				(\forall i: \ent)(\forall j: \ent) enRango(s,i) $\yLuego$ enRango(s[i],j) $\implicaLuego$ \\
-				\sum \IfThenElse{celdaVacia(s,i,j)}{1}{0}
+				\sum_{i=0}^{length(s)-1}\sum_{j=0}^{length(s[j])-1} \IfThenElse{celdaVacia(s,i,j)}{1}{0}
 			}
 		
 	\end{proc}
