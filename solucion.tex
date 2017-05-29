@@ -88,7 +88,7 @@
     \post
 		{
 			\IfThenElse{celdasVacias(t) = 0 }
-			{-1}
+			{result = -1}
 			{
 				(\exists i: \ent)(\exists j: \ent) \textbf{result} = j $\land$ enRango(t,i) $\yLuego$ enRango(t[i],j)        $\yLuego$ celdaVacia(t,i,j) $\land$ menorFilaVacia (t,i) $\land$ menorColumnaDeLaFilaVacia(t,i,j)
 			}
@@ -120,11 +120,12 @@
 		{
 			tableroValido(t)  $\land$ \\
 			esFilaYColumnaValida(f,c)  $\land$ \\
-			t = t_{0}
+			(t[f][c] \neq 0)$\land$
+			t = t_{0} 
+			
 		}
     \post
-		{ \textbf{result} = (t[f][c] \neq 0 ) $\land$ \\
-			\textbf{t} = SetAt(t_{0}[f], c, 0) \\
+		{\textbf{t} = SetAt(t_{0}[f], c, 0) \\
 			 
 		}
 	\end{proc}
